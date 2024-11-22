@@ -30,7 +30,7 @@ class NickCmd extends Command
       if ($sceneName === "hub" || $sceneName === "hubparty") {
         $rankLevel = $sender->getRank()->getRanklevel();
         if ($rankLevel < 1) {
-          $sender->sendMessage(TextFormat::YELLOW . "You do not have perms to set your nick name! Buy a rank at "
+          $sender->sendMessage(TextFormat::YELLOW . "You do not have permission to set your nickname! Buy a rank at "
             . TextFormat::GREEN . "swim.tebex.io " . TextFormat::YELLOW . "or boost " . TextFormat::LIGHT_PURPLE . "discord.gg/swim");
         } else {
           // if we have perms then check if clearing or generating a new name tag
@@ -38,7 +38,7 @@ class NickCmd extends Command
             $sender->getNicks()->resetNick();
             // $sender->getCosmetics()->tagNameTag();
             $sender->genericNameTagHandling();
-            $sender->sendMessage(TextFormat::GREEN . "Reset your nickname back to your real name!");
+            $sender->sendMessage(TextFormat::GREEN . "Reset your nickname back to your default username!");
             $this->staffAlert($sender);
           } elseif (isset($args[0])) { // directly setting
             if ($rankLevel >= Rank::MVP) {
@@ -47,7 +47,7 @@ class NickCmd extends Command
 
               // length check
               if (strlen($name) > 12) {
-                $sender->sendMessage(TextFormat::RED . "That nick is too long!");
+                $sender->sendMessage(TextFormat::RED . "That nickname is too long!");
                 return false;
               }
 
@@ -55,7 +55,7 @@ class NickCmd extends Command
               $disallowedNames = ["swedeachu", "gameparrot", "gxmeparrot", "swimfan"];
               foreach ($disallowedNames as $disallowedName) {
                 if (str_contains($lower, $disallowedName)) {
-                  $sender->sendMessage(TextFormat::RED . "You cannot nick as another player on the server");
+                  $sender->sendMessage(TextFormat::RED . "You cannot nick as another player on the server!");
                   return false;
                 }
               }
@@ -63,7 +63,7 @@ class NickCmd extends Command
               // check online legality
               foreach ($this->core->getServer()->getOnlinePlayers() as $player) {
                 if ($player instanceof SwimPlayer && (strtolower($player->getName()) == $lower || $player->getNicks()->getNick() == $lower)) {
-                  $sender->sendMessage(TextFormat::RED . "You can not nick as another player on the server");
+                  $sender->sendMessage(TextFormat::RED . "You can not have your nickname as another player on the server!");
                   return false;
                 }
               }
